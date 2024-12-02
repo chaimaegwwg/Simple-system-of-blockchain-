@@ -1,0 +1,52 @@
+import socket
+import sys
+import time
+import log_symbols
+
+def logo():
+    print(f"\033[1;31m██╗  ███░░      ░░███░        ░██╗██╗░░░██╗░██████╗████████╗  ░██████╗░██╗██████╗░██╗░░░░░")
+    print(f"\033[1;31m██║  █░███░░  ░░███░█░        ░██║██║░░░██║██╔════╝╚══██╔══╝  ██╔════╝░██║██╔══██╗██║░░░░░")
+    print(f"\033[1;31m ██║  █░░░███░░███░░░█░       ░██║██║░░░██║╚█████╗░░░░██║░░░  ██║░░██╗░██║██████╔╝██║░░░░░")
+    print(f"\033[1;31m██║  █░  ░░████░░  ░█░    ██╗ ░██║██║░░░██║░╚═══██╗░░░██║░░░  ██║░░╚██╗██║██╔══██╗██║░░░░░")
+    print(f"\033[1;31m██║  █░  ░░████░░  ░█░    ██╗░░██║██║░░░██║░╚═══██╗░░░██║░░░  ██║░░╚██╗██║██╔══██╗██║░░░░░")
+    print(f"\033[1;31m╚═╝  █░   ██░░░██  ░█░     ░████╝░░╚█████╝░╚█████╝░░░░╚═╝░░░  ░█████╝░╚═╝╚═╝░░╚═╝╚══════╝")
+    print(f"\033[1;31m     █████░█░░█░░████░]")
+    print(f"\033[1;31m         ░█░  ░█░")
+    print(f"\033[1;31m        ░█░    ░█░")
+    print(f"\033[1;31m       ░█░      ░█░")
+    print(f"\033[1;31m    ")
+    print(f"\033[1;31m   ")
+    print(f"\033[1;31m   ")
+logo.log = "Logging Enabled"
+try:
+    logo()
+except KeyboardInterrupt:
+    # Exit gracefully when Ctrl+C is pressed
+    print("\nAnimation stopped.")
+    print(logo.log)
+
+args=sys.argv
+print(f"\033[1;32mstart scaing on : {args[1]}")
+print(f"\033[1;31m   ")
+print(f"\033[1;31m   ")
+
+open_ports=[]
+
+for port in range (int(args[2]),int(args[3])):
+    try:
+        sock =socket.socket(socket.AF_INET,socket.SOCK_STREAM)
+        sock.settimeout(1)
+        sock.connect((args[1],port))
+        open_ports.append(port)
+        
+
+    except:   
+        print(f"{port} [CLOSE]")
+print("________________________________________________________")
+
+for port in open_ports:
+    try:
+        service_name = socket.getservbyport(port)
+    except OSError:
+        service_name = "Unknown"
+    print(f"\033[1;32m {port} [OPEN] {service_name}")
